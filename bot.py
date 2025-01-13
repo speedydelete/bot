@@ -1,5 +1,5 @@
 
-'''defines a custom wrapper client on top of discord.py'''
+'''the main Bot class'''
 
 from typing import Any, get_origin, get_args, Callable, Sequence
 from types import UnionType, GenericAlias
@@ -97,9 +97,9 @@ def spec_to_parser(spec: CmdSpec) -> ArgumentParser:
     return out
 
 
-class Client:
+class Bot:
 
-    '''custom version of discord.Client'''
+    '''main Bot class'''
 
     def __init__(self, client: discord.Client, prefix: str) -> None:
         self.client = client
