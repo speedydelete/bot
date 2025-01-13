@@ -29,6 +29,12 @@ def issubtype(value: Any, t: type_) -> bool:
             return all(issubtype(x, u) for x, u in zip(value, args))
         return True
 
+def get_type_checker(t: type_) -> Callable:
+    def wrapper(value):
+        return issubtype(value, t)
+    return wrapper
+
+
 @dataclass
 class Arg:
     '''argument for a command'''
@@ -44,7 +50,6 @@ class Arg:
     dest: str | MISSING_TYPE = MISSING
     deprecated: bool = False
 
-
 @dataclass
 class CmdSpec:
     '''spec for a command'''
@@ -56,10 +61,6 @@ class CmdSpec:
     default: Any = None
     args: tuple[Arg] = tuple()
 
-def get_type_checker(t: type_) -> Callable:
-    def wrapper(value):
-        return issubtype(value, t)
-    return wrapper
 
 def spec_to_parser(spec: CmdSpec) -> ArgumentParser:
     out = ArgumentParser()
